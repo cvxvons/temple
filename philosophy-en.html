@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Philosophy.mn</title>
+<meta name="description" content="A space to honor the wisdom of thinkers.">
+<meta property="og:title" content="Philosophy.mn">
+<meta property="og:description" content="A space to honor the wisdom of thinkers.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.philosophy.mn/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #111111;
+    --bg3: #161616;
+    --card: #1a1a1a;
+    --card2: #202020;
+    --border: rgba(255,255,255,0.08);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0ede8;
+    --text2: #a09a91;
+    --text3: #6b6560;
+    --accent: #c8a96e;
+    --accent2: #e8c98a;
+    --accent-dim: rgba(200,169,110,0.15);
+    --radius: 18px;
+    --radius-sm: 10px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  .nav-cta {
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent2); transform: translateY(-1px); }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(200,169,110,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(200,169,110,0.04) 0%, transparent 60%);
+  }
+
+  .hero-scroll-word {
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 16vw, 200px);
+    font-weight: 700;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    animation: scrollWord 18s linear infinite;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+
+  @keyframes scrollWord {
+    0% { left: 100%; }
+    100% { left: -200%; }
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: var(--accent-dim);
+    border: 1px solid rgba(200,169,110,0.3);
+    color: var(--accent);
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 50px;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 7vw, 96px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: clamp(15px, 2vw, 18px);
+    color: var(--text2);
+    max-width: 520px;
+    margin: 0 auto 44px;
+    position: relative;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0a0a;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(200,169,110,0.3); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text);
+    padding: 14px 32px;
+    border-radius: 50px;
+    border: 1px solid var(--border2);
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── SECTION COMMONS ── */
+  section { padding: 100px 24px; }
+
+  .section-inner { max-width: 1100px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .section-sub {
+    font-size: 16px;
+    color: var(--text2);
+    max-width: 520px;
+    margin-bottom: 60px;
+  }
+
+  /* ── STATS ── */
+  #stats { background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .stat-card {
+    background: var(--bg2);
+    padding: 44px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+  }
+
+  .stat-value {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .stat-desc {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 4px;
+  }
+
+  /* ── PODCAST ── */
+  .podcast-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .podcast-player {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
+  .player-featured {
+    padding: 28px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+
+  .player-thumb {
+    width: 72px;
+    height: 72px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent-dim), rgba(200,169,110,0.05));
+    border: 1px solid rgba(200,169,110,0.2);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+  }
+
+  .player-info { flex: 1; }
+  .player-title { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 600; margin-bottom: 4px; }
+  .player-author { font-size: 13px; color: var(--text2); margin-bottom: 12px; }
+
+  .player-controls {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .play-btn {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    flex-shrink: 0;
+  }
+  .play-btn:hover { background: var(--accent2); transform: scale(1.05); }
+  .play-btn svg { width: 14px; height: 14px; fill: #0a0a0a; margin-left: 2px; }
+
+  .progress-bar {
+    flex: 1;
+    height: 3px;
+    background: var(--border2);
+    border-radius: 2px;
+    position: relative;
+  }
+  .progress-fill {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 35%;
+    background: var(--accent);
+    border-radius: 2px;
+  }
+
+  .player-time { font-size: 12px; color: var(--text3); }
+
+  .episode-list { }
+
+  .episode-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 28px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .episode-item:hover { background: rgba(255,255,255,0.02); }
+  .episode-item:last-child { border-bottom: none; }
+
+  .ep-thumb {
+    width: 44px; height: 44px;
+    border-radius: 8px;
+    background: var(--card2);
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+  }
+
+  .ep-info { flex: 1; min-width: 0; }
+  .ep-title { font-size: 14px; font-weight: 400; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ep-meta { font-size: 12px; color: var(--text3); margin-top: 2px; }
+
+  .ep-duration { font-size: 12px; color: var(--text2); flex-shrink: 0; }
+
+  .podcast-features { display: flex; flex-direction: column; gap: 20px; }
+
+  .feature-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    transition: border-color 0.2s;
+  }
+  .feature-card:hover { border-color: rgba(200,169,110,0.25); }
+
+  .feature-tag {
+    display: inline-block;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+
+  .feature-card h3 { font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 600; margin-bottom: 8px; }
+  .feature-card p { font-size: 14px; color: var(--text2); line-height: 1.6; }
+
+  /* ── PHILOSOPHERS ── */
+  #philosophers { background: var(--bg2); }
+
+  .philosophers-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .philosopher-feed {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .phil-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .phil-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--card2), var(--card));
+    border: 1px solid var(--border2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .phil-post {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    flex: 1;
+  }
+
+  .phil-name { font-size: 13px; font-weight: 500; margin-bottom: 2px; }
+  .phil-handle { font-size: 11px; color: var(--text3); }
+  .phil-quote {
+    font-size: 13px;
+    color: var(--text2);
+    margin-top: 8px;
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .phil-time { font-size: 11px; color: var(--text3); margin-top: 6px; }
+
+  .phil-scroll-strip {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+
+  .phil-chip {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: 8px 16px;
+    font-size: 13px;
+    color: var(--text2);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .phil-chip span { font-size: 16px; }
+
+  /* ── MEANING ── */
+  .meaning-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .memento-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+  }
+
+  .memento-label {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 24px;
+  }
+
+  .memento-ring {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto 24px;
+    position: relative;
+  }
+
+  .memento-ring svg { width: 100%; height: 100%; }
+
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .ring-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .ring-sub { font-size: 10px; color: var(--text3); letter-spacing: 0.05em; }
+
+  .memento-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .memento-desc { font-size: 13px; color: var(--text2); text-align: center; }
+
+  .meaning-features { display: flex; flex-direction: column; gap: 20px; }
+
+  /* ── NEW FEATURES ── */
+  #new-features { background: var(--bg2); }
+
+  .new-features-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .nf-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .nf-card:hover { border-color: rgba(200,169,110,0.3); transform: translateY(-2px); }
+
+  .nf-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .nf-card:hover::before { opacity: 1; }
+
+  .nf-new-badge {
+    display: inline-block;
+    background: var(--accent);
+    color: #0a0a0a;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+
+  .nf-icon {
+    font-size: 36px;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .nf-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .nf-mn {
+    font-size: 13px;
+    color: var(--accent);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .nf-card p {
+    font-size: 14px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .nf-mockup {
+    margin-top: 24px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    font-size: 13px;
+    color: var(--text3);
+  }
+
+  .nf-mockup-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    font-size: 13px;
+  }
+  .nf-mockup-row:last-child { border-bottom: none; }
+  .nf-mockup-row span { font-size: 16px; }
+
+  /* ── FAQ ── */
+  #faq { }
+
+  .faq-list { max-width: 700px; }
+
+  .faq-item {
+    border-bottom: 1px solid var(--border);
+  }
+
+  .faq-q {
+    padding: 22px 0;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    user-select: none;
+    transition: color 0.2s;
+  }
+  .faq-q:hover { color: var(--accent); }
+
+  .faq-icon {
+    width: 22px; height: 22px;
+    border: 1px solid var(--border2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    font-size: 14px;
+    color: var(--text3);
+    transition: all 0.2s;
+  }
+
+  .faq-item.open .faq-icon { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); transform: rotate(45deg); }
+
+  .faq-a {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    font-size: 15px;
+    color: var(--text2);
+    line-height: 1.7;
+  }
+
+  .faq-item.open .faq-a { max-height: 200px; }
+  .faq-a-inner { padding-bottom: 22px; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--bg2); border-top: 1px solid var(--border); }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .contact-info { }
+  .contact-info h2 { font-family: 'Playfair Display', serif; font-size: 36px; font-weight: 700; margin-bottom: 16px; line-height: 1.2; }
+  .contact-info p { font-size: 15px; color: var(--text2); margin-bottom: 40px; }
+
+  .contact-detail { margin-bottom: 20px; }
+  .contact-detail-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); margin-bottom: 6px; }
+  .contact-detail a, .contact-detail span { font-size: 15px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .contact-detail a:hover { color: var(--accent); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+
+  .form-group { display: flex; flex-direction: column; gap: 8px; }
+
+  .form-label { font-size: 12px; font-weight: 500; letter-spacing: 0.05em; color: var(--text2); }
+
+  .form-input {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 14px;
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .form-input:focus { border-color: var(--accent); }
+  .form-input::placeholder { color: var(--text3); }
+
+  select.form-input option { background: var(--card2); }
+
+  .form-submit {
+    background: var(--accent);
+    color: #0a0a0a;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+    margin-top: 8px;
+  }
+  .form-submit:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  /* ── CTA BANNER ── */
+  #cta-banner {
+    padding: 100px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(200,169,110,0.06) 0%, transparent 70%);
+  }
+
+  #cta-banner h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  #cta-banner p { font-size: 17px; color: var(--text2); margin-bottom: 36px; position: relative; }
+
+  .store-buttons { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; position: relative; }
+
+  .store-btn {
+    background: var(--card);
+    border: 1px solid var(--border2);
+    border-radius: var(--radius-sm);
+    padding: 12px 24px;
+    text-decoration: none;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s;
+  }
+  .store-btn:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .store-btn-icon { font-size: 24px; }
+  .store-btn-text { text-align: left; }
+  .store-btn-sub { font-size: 10px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; }
+  .store-btn-name { font-size: 16px; font-weight: 500; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px 48px 40px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 48px;
+  }
+
+  .footer-brand { }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--text);
+    text-decoration: none;
+    display: block;
+  }
+  .footer-tagline { font-size: 13px; color: var(--text3); }
+
+  .footer-links {
+    display: flex;
+    gap: 64px;
+  }
+
+  .footer-col h4 {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 16px;
+  }
+
+  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: var(--text2); text-decoration: none; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--text); }
+
+  .social-links { display: flex; gap: 12px; }
+
+  .social-link {
+    width: 36px; height: 36px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.2s;
+  }
+  .social-link:hover { border-color: var(--accent); transform: translateY(-2px); }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer-copy { font-size: 13px; color: var(--text3); }
+
+  /* ── ANIMATIONS ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .podcast-layout, .philosophers-layout, .meaning-layout, .contact-layout { grid-template-columns: 1fr; }
+    .new-features-grid { grid-template-columns: 1fr; }
+    .footer-top { flex-direction: column; gap: 36px; }
+    .footer-links { gap: 36px; }
+  }
+
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .footer-links { flex-direction: column; gap: 24px; }
+    footer { padding: 48px 24px 32px; }
+    .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">philosophy.mn</a>
+  <ul class="nav-links">
+    <li><a href="#podcast">Podcast</a></li>
+    <li><a href="#philosophers">Philosophers</a></li>
+    <li><a href="#meaning">Meaning</a></li>
+    <li><a href="#new-features">New</a></li>
+    <li><a href="https://shop.philosophy.mn" target="_blank">Shop</a></li>
+  </ul>
+  <a href="https://onelink.to/242tvq" target="_blank" class="nav-cta">Download App</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-scroll-word">Philosophy</div>
+  <div class="hero-badge">philosophy.mn · Since 2017</div>
+  <h1 class="hero-title">A space to <em>honor</em><br>wisdom of thinkers.</h1>
+  <p class="hero-sub">We have been working since 2017 to spread the ideas of great thinkers in the most creative way — and by 2035, we aim to build the world's first Philosophy Museum.</p>
+  <div class="hero-buttons">
+    <a href="https://onelink.to/242tvq" target="_blank" class="btn-primary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17 1.01L7 1c-1.1 0-2 .9-2 2v18c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V3c0-1.1-.9-1.99-2-1.99z"/></svg>
+      Download the App
+    </a>
+    <a href="#podcast" class="btn-secondary">Explore Podcast →</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+  <div class="section-inner">
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-label">Podcast hours played</div>
+        <div class="stat-value">~200K</div>
+        <div class="stat-desc">Total hours of Philosophy podcast listened to.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">App users</div>
+        <div class="stat-value">~10K</div>
+        <div class="stat-desc">People using the Philosophy app daily.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">App Store rating</div>
+        <div class="stat-value">4.8</div>
+        <div class="stat-desc">Average user rating on the App Store.</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Social followers</div>
+        <div class="stat-value">157K</div>
+        <div class="stat-desc">Total followers across all social platforms.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PODCAST -->
+<section id="podcast">
+  <div class="section-inner">
+    <div class="section-label">Podcast</div>
+    <h2 class="section-title">Philosophy Podcast</h2>
+    <p class="section-sub">Free and paid episodes from history's greatest thinkers — in audio format, always at hand.</p>
+
+    <div class="podcast-layout reveal">
+      <!-- Player -->
+      <div class="podcast-player">
+        <div class="player-featured">
+          <div class="player-thumb">📖</div>
+          <div class="player-info">
+            <div class="player-title">Dokkōdō — The Way of Walking Alone</div>
+            <div class="player-author">Miyamoto Musashi · 4,900₮</div>
+            <div class="player-controls">
+              <button class="play-btn">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+              </button>
+              <div class="progress-bar"><div class="progress-fill"></div></div>
+              <span class="player-time">01:45:01</span>
+            </div>
+          </div>
+        </div>
+        <div class="episode-list">
+          <div class="episode-item">
+            <div class="ep-thumb">🧠</div>
+            <div class="ep-info">
+              <div class="ep-title">Who Am I?</div>
+              <div class="ep-meta">Richard David Precht · 2029 plays</div>
+            </div>
+            <div class="ep-duration">1:15:19</div>
+          </div>
+          <div class="episode-item">
+            <div class="ep-thumb">🌿</div>
+            <div class="ep-info">
+              <div class="ep-title">Siddhartha</div>
+              <div class="ep-meta">Hermann Hesse · 66 plays</div>
+            </div>
+            <div class="ep-duration">25:07</div>
+          </div>
+          <div class="episode-item">
+            <div class="ep-thumb">⚡</div>
+            <div class="ep-info">
+              <div class="ep-title">The Virtue of Selfishness</div>
+              <div class="ep-meta">Ayn Rand · 1277 plays</div>
+            </div>
+            <div class="ep-duration">44:11</div>
+          </div>
+          <div class="episode-item">
+            <div class="ep-thumb">🏛️</div>
+            <div class="ep-info">
+              <div class="ep-title">Meditations</div>
+              <div class="ep-meta">Marcus Aurelius · 2317 plays</div>
+            </div>
+            <div class="ep-duration">42:00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="podcast-features">
+        <div class="feature-card">
+          <div class="feature-tag">Free & Paid</div>
+          <h3>Curated Episodes</h3>
+          <p>Listen to both free and premium podcast episodes from history's greatest thinkers — all in one beautiful app.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Live Lyrics</div>
+          <h3>Follow Along in Text</h3>
+          <p>Read the transcript in real time as the podcast plays — so you never miss a thought.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Offline Mode</div>
+          <h3>Listen Anywhere</h3>
+          <p>Download episodes and listen without an internet connection — on your commute, in nature, anywhere.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHILOSOPHERS -->
+<section id="philosophers">
+  <div class="section-inner">
+    <div class="philosophers-layout">
+      <div>
+        <div class="section-label">Philosophers</div>
+        <h2 class="section-title">Follow the Thinkers</h2>
+        <p class="section-sub">Follow philosopher profiles and never miss a new quote, fact, or idea — updated daily.</p>
+        <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
+          <div class="feature-card" style="padding:22px 24px;">
+            <div class="feature-tag">Philosophers</div>
+            <h3 style="font-size:17px;">Curated Profiles</h3>
+            <p>Follow your favorite thinkers and see their ideas organized by topic and era.</p>
+          </div>
+          <div class="feature-card" style="padding:22px 24px;">
+            <div class="feature-tag">Quotes & Facts</div>
+            <h3 style="font-size:17px;">Daily Posts</h3>
+            <p>A new quote or insight from a philosopher lands in your feed every single day.</p>
+          </div>
+          <div class="feature-card" style="padding:22px 24px;">
+            <div class="feature-tag">Share Thoughts</div>
+            <h3 style="font-size:17px;">Leave Your Reflection</h3>
+            <p>React and leave your own thoughts on philosopher posts — become part of the conversation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="philosopher-feed reveal">
+        <div class="phil-scroll-strip">
+          <div class="phil-chip"><span>🏛️</span> Socrates</div>
+          <div class="phil-chip"><span>⚡</span> Nietzsche</div>
+          <div class="phil-chip"><span>🧘</span> Aurelius</div>
+          <div class="phil-chip"><span>🌿</span> Rousseau</div>
+          <div class="phil-chip"><span>🔥</span> Camus</div>
+        </div>
+        <div class="phil-row">
+          <div class="phil-avatar">⚡</div>
+          <div class="phil-post">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+              <div>
+                <div class="phil-name">Friedrich Nietzsche</div>
+                <div class="phil-handle">@overman</div>
+              </div>
+            </div>
+            <div class="phil-quote">"There are two types of people in this world — those who want to know, and those who want to believe."</div>
+            <div class="phil-time">136 years ago</div>
+          </div>
+        </div>
+        <div class="phil-row">
+          <div class="phil-avatar">🏛️</div>
+          <div class="phil-post">
+            <div>
+              <div class="phil-name">Marcus Aurelius</div>
+              <div class="phil-handle">@meditations</div>
+            </div>
+            <div class="phil-quote">"You have power over your mind — not outside events. Realize this, and you will find strength."</div>
+            <div class="phil-time">1,860 years ago</div>
+          </div>
+        </div>
+        <div class="phil-row">
+          <div class="phil-avatar">🌊</div>
+          <div class="phil-post">
+            <div>
+              <div class="phil-name">Albert Camus</div>
+              <div class="phil-handle">@absurd</div>
+            </div>
+            <div class="phil-quote">"One must imagine Sisyphus happy."</div>
+            <div class="phil-time">~65 years ago · 100 ❤️ · 8 replies</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MEANING -->
+<section id="meaning">
+  <div class="section-inner">
+    <div class="section-label">Meaning</div>
+    <h2 class="section-title">Purpose</h2>
+    <p class="section-sub">Tools to keep you grounded in what matters — your time, your values, your life.</p>
+
+    <div class="meaning-layout reveal">
+      <div class="meaning-features">
+        <div class="feature-card">
+          <div class="feature-tag">Memento Mori</div>
+          <h3>Your Remaining Life</h3>
+          <p>Calculated from the global average lifespan — see how much of your life is left, updated every second. A quiet reminder to live fully.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Meaning in Life</div>
+          <h3>Your Purpose, Always Visible</h3>
+          <p>Set your meaning and see it daily. Built from years of collected wisdom, distilled into something personal.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-tag">Saved Contents</div>
+          <h3>Your Personal Archive</h3>
+          <p>All purchased, saved, and liked podcasts and posts — in one place, always accessible.</p>
+        </div>
+      </div>
+
+      <div class="memento-card">
+        <div class="memento-label">Today</div>
+        <div class="memento-ring">
+          <svg viewBox="0 0 140 140">
+            <circle cx="70" cy="70" r="58" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="10"/>
+            <circle cx="70" cy="70" r="58" fill="none" stroke="url(#goldGrad)" stroke-width="10"
+              stroke-dasharray="364" stroke-dashoffset="292" stroke-linecap="round"
+              transform="rotate(-90 70 70)"/>
+            <defs>
+              <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#c8a96e"/>
+                <stop offset="100%" style="stop-color:#e8c98a"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-pct" id="lifePercent">—</div>
+            <div class="ring-sub">% lived</div>
+          </div>
+        </div>
+        <div class="memento-title">Memento Mori</div>
+        <div class="memento-desc">Your remaining life... counting down, one second at a time.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEW FEATURES -->
+<section id="new-features">
+  <div class="section-inner">
+    <div class="section-label">Coming Soon</div>
+    <h2 class="section-title">What's New</h2>
+    <p class="section-sub">Fresh features designed to deepen your relationship with philosophy — now arriving in the app.</p>
+
+    <div class="new-features-grid reveal">
+
+      <!-- Бодлоо -->
+      <div class="nf-card">
+        <div class="nf-new-badge">New Screen</div>
+        <span class="nf-icon">💭</span>
+        <h3>Thoughts</h3>
+        <div class="nf-mn">Бодлоо</div>
+        <p>A dedicated space to capture and explore your own reflections. Inspired by the thinkers you follow — now with room for your voice too. Write, save, and revisit your personal philosophical journal.</p>
+        <div class="nf-mockup">
+          <div class="nf-mockup-row"><span>📝</span> My reflections on Stoicism</div>
+          <div class="nf-mockup-row"><span>🌙</span> Evening thought — Nov 12</div>
+          <div class="nf-mockup-row"><span>⚡</span> After reading Nietzsche today...</div>
+        </div>
+      </div>
+
+      <!-- Танхим -->
+      <div class="nf-card">
+        <div class="nf-new-badge">New Screen</div>
+        <span class="nf-icon">🏛️</span>
+        <h3>The Hall</h3>
+        <div class="nf-mn">Танхим</div>
+        <p>A community gathering space where ideas meet. Join live discussions, themed reading circles, and philosophy sessions with others who share your curiosity. Philosophy, together.</p>
+        <div class="nf-mockup">
+          <div class="nf-mockup-row"><span>🔴</span> Live — Stoic Circle · 14 members</div>
+          <div class="nf-mockup-row"><span>📚</span> Book Club · Siddhartha · Open</div>
+          <div class="nf-mockup-row"><span>🗣️</span> Weekly Debate · Thursdays</div>
+        </div>
+      </div>
+
+      <!-- Terms -->
+      <div class="nf-card">
+        <div class="nf-new-badge">New Feature</div>
+        <span class="nf-icon">📖</span>
+        <h3>Philosophy Terms</h3>
+        <div class="nf-mn">Нэр томьёо</div>
+        <p>Every philosophical concept — explained clearly and beautifully. From Nihilism to Epistemology, from the Categorical Imperative to the Absurd. Your personal philosophical dictionary, always a tap away.</p>
+        <div class="nf-mockup">
+          <div class="nf-mockup-row"><span>🔍</span> Stoicism — what it really means</div>
+          <div class="nf-mockup-row"><span>🔍</span> The Absurd — Camus explained</div>
+          <div class="nf-mockup-row"><span>🔍</span> Categorical Imperative — Kant</div>
+        </div>
+      </div>
+
+      <!-- Post Explainers -->
+      <div class="nf-card">
+        <div class="nf-new-badge">New Feature</div>
+        <span class="nf-icon">🔎</span>
+        <h3>Post Explainers</h3>
+        <div class="nf-mn">Тайлбар</div>
+        <p>Every episode and post now comes with a deep-dive explainer. Context, background, key ideas, and implications — so you don't just hear the quote, you truly understand it.</p>
+        <div class="nf-mockup">
+          <div class="nf-mockup-row"><span>💡</span> Why Nietzsche said this</div>
+          <div class="nf-mockup-row"><span>🕰️</span> Historical context · 1883</div>
+          <div class="nf-mockup-row"><span>🔗</span> Related ideas & thinkers</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="section-inner">
+    <div class="section-label">FAQ</div>
+    <h2 class="section-title">Common Questions</h2>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-q">Is the app free to use? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">The app is free to download. Some podcast episodes and premium content require a one-time purchase, but a large library of content is freely available to all users.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can international users access the app? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes. The app is available globally on both the App Store and Google Play. Content is currently available in Mongolian, with English content expanding.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is it available on Android and iOS? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">Yes — Philosophy.mn is available on both Android (Google Play) and iOS (App Store). Download it from either platform using the link on this page.</div></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Where do the quotes and content come from? <span class="faq-icon">+</span></div>
+        <div class="faq-a"><div class="faq-a-inner">All quotes, episodes, and content are carefully researched and sourced from the original works of each philosopher, verified against academic references and primary texts.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner">
+    <div class="contact-layout reveal">
+      <div class="contact-info">
+        <div class="section-label">Contact</div>
+        <h2>Let's Work Together</h2>
+        <p>Partnerships, media inquiries, or just a philosophical exchange — we'd love to hear from you.</p>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Address</div>
+          <span>Bagshiin Deed UBH Center, Floor 11, Room 1110<br>Ulaanbaatar, Mongolia</span>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Email</div>
+          <a href="mailto:philosophy2k22@gmail.com">philosophy2k22@gmail.com</a>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Phone</div>
+          <a href="tel:+97695096446">+976 9509 6446</a>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-group">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-input" placeholder="Your name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" placeholder="+1 000 000 0000">
+          </div>
+          <div class="form-group">
+            <label class="form-label">How would you like to collaborate?</label>
+            <select class="form-input">
+              <option value="">Select an option</option>
+              <option>Partnership / Sponsorship</option>
+              <option>Media / Press</option>
+              <option>Content Collaboration</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+          <button class="form-submit">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="cta-bg"></div>
+  <div class="section-inner">
+    <div class="section-label" style="margin:0 auto 16px; text-align:center;">Philosophy.mn since 2017</div>
+    <h2>Your space to honor<br><em style="font-style:italic;color:var(--accent)">clear thinking.</em></h2>
+    <p>Join 10,000+ people exploring philosophy every day.</p>
+    <div class="store-buttons">
+      <a href="https://onelink.to/242tvq" target="_blank" class="store-btn">
+        <span class="store-btn-icon">🍎</span>
+        <div class="store-btn-text">
+          <div class="store-btn-sub">Download on the</div>
+          <div class="store-btn-name">App Store</div>
+        </div>
+      </a>
+      <a href="https://onelink.to/242tvq" target="_blank" class="store-btn">
+        <span class="store-btn-icon">▶️</span>
+        <div class="store-btn-text">
+          <div class="store-btn-sub">Get it on</div>
+          <div class="store-btn-name">Google Play</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="#" class="footer-logo">philosophy.mn</a>
+        <div class="footer-tagline">A space to honor the wisdom of thinkers.</div>
+        <div class="social-links" style="margin-top:20px;">
+          <a href="https://www.instagram.com/philosophy.mn" target="_blank" class="social-link">📸</a>
+          <a href="https://www.youtube.com/@philosophymn" target="_blank" class="social-link">▶️</a>
+          <a href="https://www.facebook.com/philosophy2k17" target="_blank" class="social-link">📘</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <div class="footer-col">
+          <h4>Sections</h4>
+          <ul>
+            <li><a href="#stats">Results</a></li>
+            <li><a href="#podcast">Podcast</a></li>
+            <li><a href="#philosophers">Philosophers</a></li>
+            <li><a href="#meaning">Meaning</a></li>
+            <li><a href="#new-features">What's New</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="https://www.philosophy.mn/privacy-policy" target="_blank">Privacy Policy</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 philosophy.mn — All rights reserved.</div>
+      <div class="footer-copy">Designed by RENEW LLC · Made with ❤️ by Tsetsen</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(r => observer.observe(r));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if (!isOpen) item.classList.add('open');
+    });
+  });
+
+  // Memento Mori — show % of life lived based on age 30, global avg 72
+  (function() {
+    const age = 30;
+    const avg = 72;
+    const pct = Math.min(100, Math.round((age / avg) * 100));
+    document.getElementById('lifePercent').textContent = pct + '%';
+    // Animate the ring
+    const circle = document.querySelector('.memento-ring circle:last-child');
+    if (circle) {
+      const circumference = 2 * Math.PI * 58;
+      const offset = circumference - (pct / 100) * circumference;
+      circle.style.strokeDasharray = circumference;
+      circle.style.strokeDashoffset = offset;
+    }
+  })();
+</script>
+
+</body>
+</html>
