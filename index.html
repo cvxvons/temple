@@ -8,6 +8,13 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Libre+Baskerville:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<template id="__bundler_thumbnail" data-bg-color="#0a0a0a">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0a0a0a"/>
+    <path d="M548 300 L600 250 L652 300 L600 350 Z" fill="#e8e4dc"/>
+    <text x="600" y="470" font-family="Georgia, serif" font-size="120" fill="#e8e4dc" text-anchor="middle">Temple</text>
+  </svg>
+</template>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
 <style>
   #loader {
@@ -74,7 +81,7 @@
     </a>
     <div class="nav-links">
       <a href="#podcast">Wisdom</a>
-      <a href="#thinkers">I Think</a>
+      <a href="#thinkers">Thoughts</a>
       <a href="#meaning">Meaning</a>
     </div>
     <div class="nav-cta">
@@ -85,7 +92,7 @@
 </nav>
 <div class="mobile-menu" id="mobileMenu">
   <a href="#podcast">Wisdom</a>
-  <a href="#thinkers">I Think</a>
+  <a href="#thinkers">Thoughts</a>
   <a href="#meaning">Meaning</a>
   <div class="mobile-menu-cta"><a href="#download" class="btn btn-primary">Get App</a></div>
 </div>
@@ -115,7 +122,7 @@
 <!-- ===================== MISSION ===================== -->
 <section class="mission">
   <div class="wrap mission-grid">
-    <h2 class="mission-statement reveal d1">Since 2017 we've spread the ideas of history's thinkers in the most creative way we can and by 2035 we aim to build a museum of world philosophy.</h2>
+    <h2 class="mission-statement reveal d1">Since 2017, we've shared humanity's greatest ideas to nurture clearer minds and a saner world. It all leads to one dream: the World Philosophy Park, opening in 2035.</h2>
     <img class="mission-flower reveal d2" src="assets/peony-bw.png" alt="" aria-hidden="true">
   </div>
 </section>
@@ -158,8 +165,8 @@
     <div class="feature feature-thinkers">
       <div class="feature-copy reveal">
         <span class="feature-tag">Wisdom</span>
-        <h2 class="section-title thinkers-head">The long <em>listen.</em></h2>
-        <p class="section-intro">Long-form episodes on the books and lives that shaped how we think — transcribed, narrated, and yours to keep.</p>
+        <h2 class="section-title thinkers-head" style="white-space:nowrap">Wisdom, <em>unfolded.</em></h2>
+        <p class="section-intro">The ideas and lives that shaped how we think. Read, listen, or watch, however you like to take it in.</p>
         <div class="feature-tabs">
           <span class="feature-tab">Podcast</span>
           <span class="feature-tab">Articles</span>
@@ -169,7 +176,8 @@
           <span class="feature-tab">Works</span>
         </div>
       </div>
-      <div class="feature-visual persp reveal d1">
+      <div class="feature-visual persp reveal d1 has-column">
+        <img class="feature-column" src="assets/ionic-column.png" alt="" aria-hidden="true" data-parallax>
         <div class="phone-solo" data-parallax>
           <div class="phone">
             <div class="notch"></div>
@@ -189,19 +197,20 @@
     <!-- I Think -->
     <div class="feature feature-thinkers">
       <div class="feature-copy reveal">
-        <span class="feature-tag">I Think</span>
+        <span class="feature-tag">Thoughts</span>
         <h2 class="section-title thinkers-head">Say it out <em>loud.</em></h2>
-        <p class="section-intro">A feed for your own thoughts — post what's on your mind, and like, comment, and share what everyone else is thinking.</p>
+        <p class="section-intro">Post what's on your mind. See what everyone else is wrestling with.</p>
         <ul class="feature-list">
           <li><span class="i">01</span><span>Share a thought and let others reply, like, and repost</span></li>
           <li><span class="i">02</span><span>A living feed of what the community is thinking right now</span></li>
         </ul>
       </div>
-      <div class="feature-visual persp reveal d1">
+      <div class="feature-visual persp reveal d1 has-statue">
+        <img class="feature-statue" src="assets/thinker-statue.png" alt="" aria-hidden="true" data-parallax>
         <div class="phone-solo" data-parallax>
           <div class="phone">
             <div class="notch"></div>
-            <div class="screen"><img src="screens/screen-ithink.png" alt="Temple I Think feed" loading="lazy"></div>
+            <div class="screen"><img src="screens/screen-ithink.png" alt="Temple Thoughts feed" loading="lazy"></div>
           </div>
         </div>
       </div>
@@ -219,20 +228,22 @@
       <div class="feature-copy reveal">
         <span class="feature-tag">Meaning</span>
         <h2 class="section-title thinkers-head">Remember that you will <em>die.</em></h2>
-        <p class="section-intro">Your remaining life, counted down to the second — a reminder of how much is left, and what you've decided it's for.</p>
+        <p class="section-intro">Your remaining life, counted down to the second. A reminder of how much is left, and what you've decided it's for.</p>
         <div style="margin-top:30px; max-width:360px">
           <div class="mono" style="font-size:11px; color:var(--muted); display:flex; justify-content:space-between"><span>0% LIVED</span><span class="accent" id="mmToday">TODAY</span><span>100%</span></div>
           <div class="mm-bar"><i id="mmFill"></i></div>
           <div style="margin-top:12px; font-family:var(--font-serif); font-size:22px; font-variant-numeric:tabular-nums" id="mmPct">52.134630000% lived…</div>
         </div>
       </div>
-      <div class="feature-visual persp reveal d1">
+      <div class="feature-visual persp reveal d1 has-meaning-art">
+        <img class="feature-k2" src="assets/k2-summit.png" alt="" aria-hidden="true" data-parallax>
         <div class="phone-solo" data-parallax>
           <div class="phone">
             <div class="notch"></div>
             <div class="screen"><img src="screens/screen-meaning.png" alt="Temple Meaning profile screen" loading="lazy"></div>
           </div>
         </div>
+        <img class="feature-skull" src="assets/skull.png" alt="" aria-hidden="true" data-parallax>
       </div>
     </div>
 
@@ -262,16 +273,16 @@
       </div>
       <div class="faq-list reveal d1">
         <div class="faq-item">
-          <button class="faq-q">Is the app free to use?<span class="pm"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Temple is free to download and opens up a large library of free podcasts, posts, and articles. A handful of premium episodes and Temple Premium features are available through an optional subscription.</div></div>
+          <button class="faq-q">How much does Temple cost?<span class="pm"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Temple offers three plans: $3.9/month, $9.9 for three months, or $34.9 for a year. The yearly plan works out cheapest per month. Every plan unlocks the full library: 45 podcasts, 100 articles, 2,200+ quotes, and 213 thinkers, plus everything we add over time. New quotes and articles arrive every day, and fresh audio and video each week.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q">Is it on both Android and iOS?<span class="pm"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">It is. Temple runs natively on both iOS and Android, and your library stays in sync across devices.</div></div>
+          <button class="faq-q">Who writes and narrates the content?<span class="pm"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">Since 2017, Dulgoon has been writing, narrating, and hosting Temple's philosophy content, one consistent voice you come to know. Behind him is a small team of professionals who help bring each piece to life, so the ideas stay personal but the craft stays sharp.</div></div>
         </div>
         <div class="faq-item">
-          <button class="faq-q">Where do the quotes come from?<span class="pm"></span></button>
-          <div class="faq-a"><div class="faq-a-inner">Every quote and fact is drawn from published works and verified sources — and each one is cited within the app so you can trace it back.</div></div>
+          <button class="faq-q">Do I need any philosophical knowledge?<span class="pm"></span></button>
+          <div class="faq-a"><div class="faq-a-inner">None at all. You just need curiosity. Everything is explained in plain language, so you can start anywhere and go as deep as you want.</div></div>
         </div>
       </div>
     </div>
@@ -286,8 +297,7 @@
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <div class="ci"><div class="l">Email</div><a class="v" href="mailto:info@templeminds.com">info@templeminds.com</a></div>
-        <p style="color:var(--muted); font-size:var(--fs-small); margin-top:26px; max-width:34ch">Partnerships, press, or a project that belongs in Temple — tell us what you have in mind.</p>
+        <div class="ci"><div class="l">Email</div><a class="v" href="/cdn-cgi/l/email-protection#b3daddd5dcf3c7d6dec3dfd6dedaddd7c09dd0dcde"><span class="__cf_email__" data-cfemail="21484f474e6155444c514d444c484f45520f424e4c">[email&#160;protected]</span></a></div>
       </div>
       <form class="contact-form reveal d1" id="contactForm" action="https://formspree.io/f/mgojvoke" method="POST" novalidate>
         <div class="form-row">
@@ -378,7 +388,7 @@
       <div class="footer-col">
         <h5>Product</h5>
         <a href="#podcast">Wisdom</a>
-        <a href="#thinkers">I Think</a>
+        <a href="#thinkers">Thoughts</a>
         <a href="#meaning">Meaning</a>
         <a href="#download">Get App</a>
       </div>
@@ -413,7 +423,7 @@
 <!-- tweaks mount -->
 <div id="tweaks-root"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
   (function () {
     var loader = document.getElementById('loader');
     var done = false;
