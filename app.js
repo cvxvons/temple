@@ -3,6 +3,10 @@
    ============================================================ */
 (function(){
   'use strict';
+  /* always open at the hero — don't let the browser restore scroll on reload */
+  if('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if(!location.hash) window.scrollTo(0,0);
+  window.addEventListener('load', function(){ if(!location.hash) window.scrollTo(0,0); });
   const $  = (s,c)=> (c||document).querySelector(s);
   const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -224,16 +228,16 @@
     if(!hero || reduce) return;
     const bg = hero.querySelector('.hero-bg');
     const bust = hero.querySelector('.hero-bust');
-    if(!bg || !bust) return;
+    if(!bg) return;
     let tx=0, ty=0, ticking=false;
     function apply(){
       const y = window.scrollY;
       bg.style.setProperty('--py',  (y*0.22).toFixed(1)+'px');
-      bust.style.setProperty('--py',(y*0.06).toFixed(1)+'px');
+      if(bust) bust.style.setProperty('--py',(y*0.06).toFixed(1)+'px');
       bg.style.setProperty('--px',  (tx*8).toFixed(1)+'px');
       bg.style.setProperty('--py2', (ty*5).toFixed(1)+'px');
-      bust.style.setProperty('--px', (tx*22).toFixed(1)+'px');
-      bust.style.setProperty('--py2',(ty*14).toFixed(1)+'px');
+      if(bust) bust.style.setProperty('--px', (tx*22).toFixed(1)+'px');
+      if(bust) bust.style.setProperty('--py2',(ty*14).toFixed(1)+'px');
       ticking=false;
     }
     function schedule(){ if(!ticking){ requestAnimationFrame(apply); ticking=true; } }
