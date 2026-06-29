@@ -341,6 +341,51 @@ button{font-family:inherit; cursor:pointer}
 .feature.flip .phone.tilt{transform:translateY(var(--py,0)) rotateY(14deg) rotateX(4deg) rotate(1deg)}
 .feature-visual.persp{perspective:1600px}
 
+/* ancient column standing behind a phone mockup — raw PNG, capital peeking out */
+.feature-visual.has-column{overflow:visible}
+.feature-visual.has-column .phone-solo{position:relative; z-index:2}
+.feature-column{
+  position:absolute; z-index:1; pointer-events:none;
+  height:97.8%; width:auto;
+  left:50%; top:-9%;
+}
+@media (max-width:760px){
+  .feature-column{height:92%; left:auto; right:-8%; top:2%}
+}
+
+/* The Thinker statue standing behind a phone, peeking out to the left */
+.feature-visual.has-statue{overflow:visible}
+.feature-visual.has-statue .phone-solo{position:relative; z-index:2}
+/* keep this phone upright — no tilt */
+.feature-visual.has-statue .phone-solo .phone,
+.feature.flip .feature-visual.has-statue .phone-solo .phone{transform:none}
+.feature-statue{
+  position:absolute; z-index:1; pointer-events:none;
+  height:73.5%; width:auto;
+  left:-10.4%; top:16.1%;
+}
+@media (max-width:760px){
+  .feature-statue{height:74%; left:-8%; top:18%}
+}
+
+/* Meaning section — K2 mountain backdrop behind the phone, skull in front at base */
+.feature-visual.has-meaning-art{overflow:visible}
+.feature-visual.has-meaning-art .phone-solo{position:relative; z-index:2; margin-top:20px}
+.feature-k2{
+  position:absolute; z-index:1; pointer-events:none;
+  height:76%; width:auto; max-width:none;
+  left:28%; top:7.6%;
+}
+.feature-skull{
+  position:absolute; z-index:3; pointer-events:none;
+  height:32.3%; width:auto; max-width:none;
+  left:-13%; top:65.3%;
+}
+@media (max-width:760px){
+  .feature-k2{width:104%; left:14%; top:2%}
+  .feature-skull{height:22%; left:8%; top:80%}
+}
+
 /* floating pulled-out card */
 .float{
   position:absolute; background:var(--surface); border:1px solid var(--line);
