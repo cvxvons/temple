@@ -183,17 +183,35 @@ button{font-family:inherit; cursor:pointer}
   filter:contrast(1.08) saturate(1.05);
   transform:translate3d(var(--px,0px), calc(var(--py,0px) + var(--py2,0px)), 0) scale(var(--s,1.1));
   transition:transform .3s cubic-bezier(.2,.8,.2,1); will-change:transform; backface-visibility:hidden}
-.hero-bg{object-position:72% 30%; --s:1.16}
+.hero-bg{object-position:80% 35%; --s:1.06}
 .hero-bust{object-position:74% 20%; --s:1.08}
+@media (max-width:980px){
+  /* keep the statue face in the upper-center of the portrait crop */
+  .hero .hero-bg{object-position:50% 0%; --s:1.04}
+  /* lift the message into the lower third — fully visible on first screen, not pinned to the very bottom */
+  .hero{padding-bottom:clamp(72px,14vh,128px)}
+  .hero .hero-foot{grid-template-columns:1fr; gap:12px; justify-items:center}
+  .hero .hero-id{max-width:none; gap:10px; align-items:center; text-align:center}
+  .hero .hero-headline{font-size:clamp(52px,11vw,80px)}
+  .hero .hero-tagline{font-size:16px; max-width:32ch}
+  /* the SCROLL cue competes with the subtitle on small screens */
+  .hero .hero-scroll{display:none}
+  /* portrait-tuned overlays: strong dark bottom for text, subtle top for the logo/menu, no heavy side wall */
+  .hero .hero-vignette{background:
+    linear-gradient(180deg, rgba(0,0,0,.16) 0%, rgba(0,0,0,.03) 16%, transparent 30%),
+    linear-gradient(0deg, #0c0c0c 0%, rgba(12,12,12,.34) 6%, rgba(12,12,12,.1) 22%, transparent 40%),
+    radial-gradient(130% 80% at 50% -8%, color-mix(in srgb,var(--accent) 6%, transparent), transparent 60%);
+  }
+}
 @media (prefers-reduced-motion:reduce){
   .hero-layer{transition:none; transform:scale(var(--s,1.1))}
 }
 .hero-vignette{position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
-    linear-gradient(0deg, rgba(0,0,0,.9) 0%, rgba(0,0,0,.55) 16%, rgba(0,0,0,.12) 38%, transparent 52%),
-    linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 24%, rgba(0,0,0,.12) 48%, transparent 66%),
-    radial-gradient(90% 75% at 12% 96%, rgba(0,0,0,.62), transparent 62%),
-    radial-gradient(70% 55% at 92% 98%, rgba(0,0,0,.45), transparent 60%),
+    linear-gradient(0deg, #0c0c0c 0%, rgba(12,12,12,.42) 7%, rgba(12,12,12,.14) 22%, transparent 42%),
+    linear-gradient(90deg, rgba(12,12,12,.32) 0%, rgba(12,12,12,.1) 22%, transparent 44%),
+    radial-gradient(90% 75% at 12% 96%, rgba(12,12,12,.12), transparent 62%),
+    radial-gradient(70% 55% at 92% 98%, rgba(12,12,12,.08), transparent 60%),
     radial-gradient(130% 90% at 50% -10%, color-mix(in srgb,var(--accent) 5%, transparent), transparent 60%);
 }
 .hero-grain{position:absolute; inset:0; z-index:1; pointer-events:none; opacity:.32; mix-blend-mode:soft-light;
@@ -224,15 +242,6 @@ button{font-family:inherit; cursor:pointer}
 .hero-scroll .chev{width:11px; height:11px; border-right:1.5px solid currentColor; border-bottom:1.5px solid currentColor; animation:chev 2.1s var(--ease) infinite}
 @keyframes chev{0%,100%{transform:rotate(45deg) translate(-2px,-2px); opacity:.45}50%{transform:rotate(45deg) translate(1px,1px); opacity:1}}
 
-@media (max-width:860px){
-  .hero-foot{grid-template-columns:minmax(0,1fr) auto; gap:20px; align-items:end}
-  .hero-id{max-width:none; gap:12px}
-  .hero-scroll{justify-self:end}
-  /* stronger bottom scrim so white text reads over the bust on small screens */
-  .hero-vignette{background:
-    linear-gradient(0deg, rgba(0,0,0,.94) 0%, rgba(0,0,0,.72) 22%, rgba(0,0,0,.3) 44%, transparent 60%),
-    radial-gradient(130% 90% at 50% -10%, color-mix(in srgb,var(--accent) 5%, transparent), transparent 60%);}
-}
 @media (prefers-reduced-motion:reduce){.hero-scroll .chev{animation:none}}
 
 /* ============================================================
@@ -579,6 +588,8 @@ button{font-family:inherit; cursor:pointer}
   .phone.tilt,.feature.flip .phone.tilt{transform:none}
   .phone-solo .phone{transform:none; width:77vw; max-width:320px}
   .phone-solo{padding:16px 0 48px}
+  /* editorial backdrops have no clean home once the visual is centered single-column — hide them */
+  .feature-column, .feature-statue, .feature-k2, .feature-skull{display:none}
   .feature{padding:clamp(40px,6vh,64px) 0}
   /* stats: always 2-col on tablet/phone */
   .stats{grid-template-columns:1fr 1fr}
