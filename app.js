@@ -440,3 +440,199 @@
     let rz; addEventListener('resize', ()=>{ clearTimeout(rz); rz=setTimeout(()=>{ resize(); if(reduce) staticRender(); }, 180); }, {passive:true});
   })();
 })();
+
+/* ============================================================
+   Hero cinematic particles — three monochrome layers:
+   1) large slow glowing orbs   2) mid drifting motes w/ twinkle
+   3) fine dust/sparks, denser near center. Cursor repels nearby
+   particles softly; all loop seamlessly. rAF, pauses when the
+   tab is hidden or the hero scrolls off-screen.
+   ============================================================ */
+(function(){
+  'use strict';
+  const c = document.getElementById('heroDust');
+  if(!c) return;
+  const ctx = c.getContext('2d');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const TAU = Math.PI * 2;
+  let W=0, H=0, raf=0, t=0;
+  let orbs=[], motes=[], dust=[];
+  const mouse = { x:-9999, y:-9999, on:false };
+  let orbSprite = null;
+
+  function size(){
+    const dpr = Math.min(window.devicePixelRatio||1, 2);
+    W = c.clientWidth; H = c.clientHeight;
+    c.width = W*dpr; c.height = H*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+
+  /* pre-rendered radial-gradient sprite so orbs cost one drawImage */
+  function makeOrbSprite(){
+    const s = document.createElement('canvas');
+    s.width = s.height = 128;
+    const g = s.getContext('2d');
+    const grad = g.createRadialGradient(64,64,0, 64,64,64);
+    grad.addColorStop(0,   'rgba(255,255,255,1)');
+    grad.addColorStop(0.35,'rgba(240,240,242,0.55)');
+    grad.addColorStop(1,   'rgba(255,255,255,0)');
+    g.fillStyle = grad;
+    g.fillRect(0,0,128,128);
+    orbSprite = s;
+  }
+
+  function make(){
+    const small = window.innerWidth < 700;
+
+    /* Layer 1 — large slow orbs */
+    const nOrbs = small ? 6 : 10;
+    orbs = Array.from({length:nOrbs}, () => ({
+      x: Math.random()*W, y: Math.random()*H,
+      r: 30 + Math.random()*30,                 // radius 30-60 → 60-120px dia
+      o: 0.15 + Math.random()*0.05,             // 15-20%
+      vy: -(0.05 + Math.random()*0.08),         // extremely slow rise
+      swayA: 8 + Math.random()*14,              // sway amplitude px
+      swayF: 0.002 + Math.random()*0.003,       // sway freq
+      ph: Math.random()*TAU,
+      ox: 0, oy: 0                              // repel offsets
+    }));
+
+    /* Layer 2 — medium motes, drifting upper-left → lower-right */
+    const nMotes = small ? 22 : 36;
+    motes = Array.from({length:nMotes}, () => {
+      const paused = Math.random() < 0.28;      // some hang mid-air
+      const sp = 0.08 + Math.random()*0.22;
+      return {
+        x: Math.random()*W, y: Math.random()*H,
+        r: 1.5 + Math.random()*2.5,             // 3-8px dia
+        o: 0.25 + Math.random()*0.10,           // 25-35%
+        vx: paused ? 0 : sp,
+        vy: paused ? 0 : sp*0.7,
+        tw: 0.4 + Math.random()*0.8,            // twinkle speed
+        ph: Math.random()*TAU,
+        ox: 0, oy: 0
+      };
+    });
+
+    /* Layer 3 — fine dust & sparks, biased toward center (logo) */
+    const nDust = small ? 55 : 92;
+    dust = Array.from({length:nDust}, () => {
+      const central = Math.random() < 0.55;
+      const gx = () => central ? W*0.5 + (Math.random()-0.5)*W*0.5 : Math.random()*W;
+      const gy = () => central ? H*0.5 + (Math.random()-0.5)*H*0.5 : Math.random()*H;
+      const a = Math.random()*TAU, sp = 0.15 + Math.random()*0.45;
+      return {
+        x: gx(), y: gy(),
+        r: 0.5 + Math.random()*0.5,             // 1-2px dia
+        o: 0.40 + Math.random()*0.10,           // 40-50%
+        vx: Math.cos(a)*sp, vy: Math.sin(a)*sp,
+        spark: Math.random() < 0.18,            // brief flashers
+        life: Math.random(),                    // 0..1 spark phase
+        lifeV: 0.004 + Math.random()*0.008,
+        ox: 0, oy: 0
+      };
+    });
+  }
+
+  const wrap = (p, m) => {
+    if(p.x < -m) p.x = W + m; else if(p.x > W + m) p.x = -m;
+    if(p.y < -m) p.y = H + m; else if(p.y > H + m) p.y = -m;
+  };
+
+  /* soft cursor repulsion + slow return of the offset */
+  function repel(p, radius, push){
+    if(mouse.on){
+      const dx = (p.x + p.ox) - mouse.x, dy = (p.y + p.oy) - mouse.y;
+      const d2 = dx*dx + dy*dy, r2 = radius*radius;
+      if(d2 < r2 && d2 > 0.01){
+        const d = Math.sqrt(d2), f = (1 - d/radius) * push;
+        p.ox += (dx/d)*f; p.oy += (dy/d)*f;
+      }
+    }
+    p.ox *= 0.965; p.oy *= 0.965;               // drift back like still water
+  }
+
+  function tick(){
+    t++;
+    ctx.clearRect(0,0,W,H);
+
+    /* Layer 1 — orbs */
+    for(const p of orbs){
+      p.y += p.vy;
+      const sway = Math.sin(t*p.swayF + p.ph) * p.swayA;
+      wrap(p, p.r*2);
+      repel(p, 160, 0.5);
+      ctx.globalAlpha = p.o;
+      const d = p.r*2;
+      ctx.drawImage(orbSprite, p.x + sway + p.ox - p.r, p.y + p.oy - p.r, d, d);
+    }
+
+    /* Layer 2 — motes */
+    ctx.fillStyle = '#e9e9ec';
+    for(const p of motes){
+      p.x += p.vx; p.y += p.vy;
+      wrap(p, 10);
+      repel(p, 110, 0.8);
+      const twinkle = 0.75 + 0.25*Math.sin(t*0.02*p.tw + p.ph);
+      ctx.globalAlpha = p.o * twinkle;
+      ctx.beginPath(); ctx.arc(p.x + p.ox, p.y + p.oy, p.r, 0, TAU); ctx.fill();
+    }
+
+    /* Layer 3 — dust & sparks */
+    ctx.fillStyle = '#fff';
+    for(const p of dust){
+      p.x += p.vx; p.y += p.vy;
+      wrap(p, 6);
+      repel(p, 90, 1.1);
+      let a = p.o;
+      if(p.spark){
+        p.life += p.lifeV;
+        if(p.life >= 1){                        // respawn spark elsewhere
+          p.life = 0;
+          p.x = W*0.5 + (Math.random()-0.5)*W*0.7;
+          p.y = H*0.5 + (Math.random()-0.5)*H*0.7;
+        }
+        const ph = p.life;                       // flash in fast, fade out
+        a = p.o * (ph < 0.15 ? ph/0.15 : Math.max(0, 1-(ph-0.15)/0.85)) * 1.6;
+      }
+      ctx.globalAlpha = Math.min(a, 0.75);
+      ctx.beginPath(); ctx.arc(p.x + p.ox, p.y + p.oy, p.r, 0, TAU); ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+    raf = requestAnimationFrame(tick);
+  }
+
+  function start(){ if(!raf && !reduce) raf = requestAnimationFrame(tick); }
+  function stop(){ cancelAnimationFrame(raf); raf = 0; }
+
+  size(); makeOrbSprite(); make();
+  if(reduce){ t = 1; tick(); cancelAnimationFrame(raf); raf = 0; } /* single static frame */
+  else start();
+
+  /* pause when tab hidden */
+  document.addEventListener('visibilitychange', () => {
+    if(document.visibilityState === 'hidden') stop(); else start();
+  });
+
+  /* pause when hero is off-screen */
+  let heroVisible = true;
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(([e])=>{
+      heroVisible = e.isIntersecting;
+      if(heroVisible && document.visibilityState === 'visible') start(); else stop();
+    }).observe(c);
+  }
+
+  /* cursor repulsion */
+  const heroEl = document.getElementById('header');
+  if(heroEl && !reduce){
+    heroEl.addEventListener('pointermove', (e) => {
+      const r = c.getBoundingClientRect();
+      mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.on = true;
+    }, {passive:true});
+    heroEl.addEventListener('pointerleave', () => { mouse.on = false; }, {passive:true});
+  }
+
+  let rz2;
+  addEventListener('resize', ()=>{ clearTimeout(rz2); rz2=setTimeout(()=>{ size(); make(); }, 160); }, {passive:true});
+})();
