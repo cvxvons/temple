@@ -99,27 +99,51 @@
 
 <!-- ===================== HERO ===================== -->
 <header class="hero" id="header">
-  <div class="hero-photo-wrap" aria-hidden="true">
-    <picture>
-      <source media="(max-width:980px)" srcset="assets/hero-statue-vert.png">
-      <img class="hero-layer hero-bg" src="assets/hero-statue-land.png" alt="">
-    </picture>
+  <video class="hero-bgvideo" id="heroVidA" autoplay muted loop playsinline aria-hidden="true">
+    <source src="assets/hero-bg.mp4" type="video/mp4">
+  </video>
+  <video class="hero-bgvideo" id="heroVidB" muted loop playsinline aria-hidden="true" style="opacity:0">
+    <source src="assets/hero-bg.mp4" type="video/mp4">
+  </video>
+  <img class="hero-statue hero-statue-l" src="assets/statue-buddha.png" alt="" aria-hidden="true">
+  <img class="hero-statue hero-statue-r" src="assets/statue-aristotle.png" alt="" aria-hidden="true">
+
+
+  <div class="hero-id reveal in">
+    <img class="hero-logo-mark" src="assets/hero-logo.png" alt="Temple" aria-hidden="true">
+    <h1 class="hero-headline t-display">Embrace a<br><em>sane mind.</em></h1>
+    <p class="hero-tagline t-small">A sanctuary for the examined life.</p>
   </div>
-  <div class="hero-vignette"></div>
+
   <div class="hero-grain"></div>
-
-  <div class="hero-foot">
-    <div class="hero-id reveal in">
-      <h1 class="hero-headline t-display">Embrace a <em>sane mind.</em></h1>
-      <p class="hero-tagline t-small">A sanctuary for the examined life.</p>
-    </div>
-
-    <a class="hero-scroll" href="#results" aria-label="Scroll to content">
-      <span>SCROLL</span>
-      <span class="chev" aria-hidden="true"></span>
-    </a>
-  </div>
+  <div class="hero-seam" aria-hidden="true"></div>
 </header>
+<script>
+(function(){
+  var a=document.getElementById('heroVidA'), b=document.getElementById('heroVidB');
+  if(!a||!b) return;
+  var vids=[a,b], active=0, fading=false, FADE=3.2;
+  function others(v){ return vids.filter(function(x){return x!==v;}); }
+  a.addEventListener('timeupdate', function(){ tick(a,b); });
+  b.addEventListener('timeupdate', function(){ tick(b,a); });
+  function tick(cur, next){
+    if(cur.style.opacity==='0'||fading) return;
+    if(cur.duration && cur.duration-cur.currentTime <= FADE){
+      fading=true;
+      next.play();
+      var t0=performance.now();
+      function step(t){
+        var p=Math.min(1,(t-t0)/(FADE*1000));
+        var e=p<0.5 ? 2*p*p : 1-Math.pow(-2*p+2,2)/2;
+        next.style.opacity=e*0.5; cur.style.opacity=(1-e)*0.5;
+        if(p<1) requestAnimationFrame(step);
+        else { cur.pause(); cur.currentTime=0; fading=false; }
+      }
+      requestAnimationFrame(step);
+    }
+  }
+})();
+</script>
 
 <!-- ===================== MISSION ===================== -->
 <section class="mission">
@@ -299,7 +323,7 @@
     </div>
     <div class="contact-grid">
       <div class="contact-info reveal">
-        <div class="ci"><div class="l">Email</div><a class="v" href="/cdn-cgi/l/email-protection#1b72757d745b6f7e766b777e7672757f6835787476"><span class="__cf_email__" data-cfemail="d1b8bfb7be91a5b4bca1bdb4bcb8bfb5a2ffb2bebc">[email&#160;protected]</span></a></div>
+        <div class="ci"><div class="l">Email</div><a class="v" href="mailto:info@templeminds.com">info@templeminds.com</a></div>
       </div>
       <form class="contact-form reveal d1" id="contactForm" action="https://formspree.io/f/mgojvoke" method="POST" novalidate>
         <div class="form-row">
@@ -416,7 +440,7 @@
   </div>
 
   <div class="wrap footer-legal">
-    <span>© 2026 Temple, Inc. All rights reserved.</span>
+    <span>© 2026 Temple. All rights reserved.</span>
     <span class="footer-made">Crafted with care for the examined life.</span>
   </div>
 
@@ -425,7 +449,7 @@
 <!-- tweaks mount -->
 <div id="tweaks-root"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
   (function () {
     var loader = document.getElementById('loader');
     var done = false;
