@@ -4,7 +4,15 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "mood": "obsidian",
   "particles": "ambient",
   "features": "alt",
-  "marquees": true
+  "marquees": true,
+  "buddhaX": -20,
+  "buddhaY": -40,
+  "buddhaW": 564,
+  "buddhaScale": 1.18,
+  "aristotleX": -19,
+  "aristotleY": 4,
+  "aristotleW": 553,
+  "aristotleScale": 0.9
 }/*EDITMODE-END*/;
 
 function applyTweaks(t){
@@ -15,6 +23,20 @@ function applyTweaks(t){
   r.style.setProperty('--accent', t.accent);
   r.classList.toggle('no-mq', !t.marquees);
   if(window.__particles) window.__particles.refresh();
+  const l = document.querySelector('.hero-statue-l');
+  const rr = document.querySelector('.hero-statue-r');
+  if(l){
+    l.style.left = t.buddhaX + '%';
+    l.style.bottom = t.buddhaY + 'px';
+    l.style.width = t.buddhaW + 'px';
+    l.style.transform = 'scale(' + t.buddhaScale + ')';
+  }
+  if(rr){
+    rr.style.right = t.aristotleX + '%';
+    rr.style.bottom = t.aristotleY + 'px';
+    rr.style.width = t.aristotleW + 'px';
+    rr.style.transform = 'scale(' + t.aristotleScale + ')';
+  }
 }
 
 function TweaksApp(){
@@ -39,6 +61,24 @@ function TweaksApp(){
       <TweakSection label="Motion" />
       <TweakToggle label="Marquees" value={t.marquees}
         onChange={(v)=>setTweak('marquees', v)} />
+      <TweakSection label="Buddha (left statue)" />
+      <TweakSlider label="X offset" value={t.buddhaX} min={-50} max={20} unit="%"
+        onChange={(v)=>setTweak('buddhaX', v)} />
+      <TweakSlider label="Y offset" value={t.buddhaY} min={-100} max={200} unit="px"
+        onChange={(v)=>setTweak('buddhaY', v)} />
+      <TweakSlider label="Width" value={t.buddhaW} min={150} max={700} unit="px"
+        onChange={(v)=>setTweak('buddhaW', v)} />
+      <TweakSlider label="Scale" value={t.buddhaScale} min={0.5} max={1.6} step={0.02}
+        onChange={(v)=>setTweak('buddhaScale', v)} />
+      <TweakSection label="Aristotle (right statue)" />
+      <TweakSlider label="X offset" value={t.aristotleX} min={-50} max={20} unit="%"
+        onChange={(v)=>setTweak('aristotleX', v)} />
+      <TweakSlider label="Y offset" value={t.aristotleY} min={-100} max={200} unit="px"
+        onChange={(v)=>setTweak('aristotleY', v)} />
+      <TweakSlider label="Width" value={t.aristotleW} min={150} max={700} unit="px"
+        onChange={(v)=>setTweak('aristotleW', v)} />
+      <TweakSlider label="Scale" value={t.aristotleScale} min={0.5} max={1.6} step={0.02}
+        onChange={(v)=>setTweak('aristotleScale', v)} />
     </TweaksPanel>
   );
 }
