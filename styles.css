@@ -143,20 +143,20 @@ button{font-family:inherit; cursor:pointer}
   backdrop-filter:blur(18px) saturate(1.2);
   border-bottom-color:var(--line-2);
 }
-.nav-inner{display:flex; align-items:center; justify-content:space-between; height:74px}
-.brand{display:flex; align-items:center; gap:11px; color:var(--ink); transition:opacity .45s var(--ease)}
+.nav-inner{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; height:74px}
+.brand{display:flex; align-items:center; gap:11px; color:var(--ink); transition:opacity .45s var(--ease); justify-self:start}
 .brand .mark{width:23px; height:23px; flex:none; color:var(--accent); align-self:center; position:relative; top:-2px}
 .brand .logo{height:35px; width:auto; color:var(--ink); margin-bottom:-3px}
 .brand-lockup{height:28px; width:auto; display:block}
 #wordmarkSrc{display:none}
-.nav-links{display:flex; align-items:center; gap:34px}
+.nav-links{display:flex; align-items:center; gap:34px; justify-self:center}
 .nav-links a{font-size:15px; font-weight:600; color:#ffffff; text-shadow:0 1px 8px rgba(0,0,0,.7); transition:color .2s; position:relative}
 .nav-links a::after{
   content:""; position:absolute; left:0; bottom:-6px; height:1px; width:0; background:var(--accent); transition:width .3s var(--ease);
 }
 .nav-links a:hover{color:var(--ink)}
 .nav-links a:hover::after{width:100%}
-.nav-cta{display:flex; align-items:center; gap:14px}
+.nav-cta{display:flex; align-items:center; gap:14px; justify-self:end}
 .nav-burger{display:none; width:42px; height:42px; border-radius:11px; border:1px solid var(--line); background:rgba(255,255,255,.06); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); align-items:center; justify-content:center}
 .nav-burger span{display:block; width:18px; height:1.5px; background:var(--ink); position:relative}
 .nav-burger span::before,.nav-burger span::after{content:""; position:absolute; left:0; width:18px; height:1.5px; background:var(--ink)}
@@ -177,17 +177,18 @@ button{font-family:inherit; cursor:pointer}
    HERO
    ============================================================ */
 .hero{position:relative; height:100svh; min-height:640px; max-height:1000px; background:#000; overflow:hidden; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:0}
+.hero-id{flex:0 0 auto}
 
 /* layer 0 — ambient dust */
 .hero-dust{position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none}
 
 /* layer -1 — looping ambient background video, dimmed under everything */
-.hero-bgvideo{position:absolute; z-index:0; inset:0; width:100%; height:100%; object-fit:cover; opacity:.5; filter:grayscale(1) contrast(1.1); pointer-events:none; transition:none}
+.hero-bgvideo{position:absolute; z-index:0; inset:0; width:100%; height:100%; object-fit:cover; object-position:center; opacity:1; filter:grayscale(1) contrast(1.1); pointer-events:none; transition:none}
 
 /* layer 1 — philosopher statues cropped by the frame edges, large & high */
-.hero-statue{position:absolute; z-index:1; pointer-events:none; user-select:none; bottom:0; top:auto; height:min(89%,760px); width:clamp(150px,36vw,600px); object-fit:cover; object-position:center 14%; transform:none}
-.hero-statue-l{left:-20%; transform:scale(1.18); transform-origin:bottom center}
-.hero-statue-r{right:-21%; object-position:center 4%}
+.hero-statue{position:absolute; z-index:0; pointer-events:none; user-select:none; bottom:0; top:auto; height:min(89%,760px); width:clamp(150px,36vw,600px); object-fit:cover; object-position:center 14%; transform:none}
+.hero-statue-l{left:clamp(-20%,-20%,-14%); bottom:-40px; width:clamp(300px,29vw,564px); transform:scale(1.18); transform-origin:bottom center}
+.hero-statue-r{right:clamp(-19%,-19%,-13%); bottom:14px; width:clamp(300px,28vw,553px); transform:scale(.9); object-position:center 4%}
 
 /* layer 3 — centered editorial type */
 .hero-id{position:relative; z-index:3; display:flex; flex-direction:column; align-items:center; text-align:center; gap:clamp(14px,1.8vw,22px); padding:0 var(--pad)}
@@ -195,21 +196,36 @@ button{font-family:inherit; cursor:pointer}
 .hero-logo-mark{width:clamp(75px,8.6vw,100px); height:auto; margin-bottom:clamp(4px,1vh,10px)}
 .hero-headline{margin:0; color:var(--ink); text-wrap:balance}
 .hero-headline em{font-style:italic; color:var(--stone)}
-.hero-tagline{margin:0; color:var(--ink-soft); max-width:44ch}
+.hero-tagline{margin:0; color:#f3f1ea; max-width:44ch; text-shadow:0 2px 12px rgba(0,0,0,.8), 0 1px 4px rgba(0,0,0,.9)}
 
 /* seam into the page background */
 .hero-seam{position:absolute; left:0; right:0; bottom:0; height:9vh; z-index:4; pointer-events:none;
   background:linear-gradient(0deg, #0c0c0c 0%, rgba(12,12,12,.5) 40%, transparent 100%)}
 
+.hero-statue-merged{display:none}
+@media (max-width:1120px){
+  .hero .hero-statue-l, .hero .hero-statue-r{height:min(70%,560px)}
+  .hero .hero-statue-l{transform:scale(1)}
+}
 @media (max-width:980px){
   .hero .hero-id{padding-top:clamp(110px,17vh,160px)}
   .hero .hero-headline{font-size:clamp(34px,11vw,80px)}
-  .hero .hero-tagline{font-size:clamp(14px,3vw,16px); max-width:32ch}
+  .hero .hero-tagline{font-size:clamp(14px,3vw,16px) !important; max-width:32ch; color:var(--ink-soft); text-shadow:none}
   .hero .hero-statue{height:min(60%,480px)}
 }
-.hero-grain{position:absolute; inset:0; z-index:3; pointer-events:none; opacity:.32; mix-blend-mode:soft-light;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+@media (max-width:480px){
+  .hero .hero-bgvideo{object-position:calc(50% + 6px) 50%}  .hero .hero-statue-l, .hero .hero-statue-r{display:none}
+  .hero{justify-content:flex-start; padding-top:0px; height:100svh; min-height:100svh; max-height:100svh; overflow:hidden; padding-bottom:0}
+  .hero .hero-id{position:relative; flex:0 0 auto; gap:0}
+  .hero .hero-logo-mark{width:64px; height:64px; margin-bottom:16px}
+  .hero .hero-headline{margin-bottom:14px}
+  .hero .hero-statue-merged{display:block; position:relative; pointer-events:none; user-select:none; flex:1 1 auto; min-height:0; margin:0 auto 0; width:auto; max-width:min(138%,660px); height:100%; max-height:100%; object-fit:contain; aspect-ratio:1120/1860}
 }
+/* sitewide sizzling grain — true per-frame random noise (canvas), not a repeating tile. Sits above section backgrounds/art, but headings, description copy and nav are lifted above it (same z-index, later in DOM) */
+.page-grain{position:fixed; inset:0; z-index:1; width:100%; height:100%; pointer-events:none; opacity:.2; mix-blend-mode:overlay}
+h1, h2, h3, h4, p, .btn, .store-badge, .kicker, .t-eyebrow, .stats, .faq-list{position:relative; z-index:1}
+.hero{position:relative; z-index:auto}
+.hero .hero-id{z-index:4}
 
 /* marquee strips */
 .marquee{display:flex; overflow:hidden; user-select:none; -webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
@@ -276,7 +292,7 @@ button{font-family:inherit; cursor:pointer}
 .mission-bg{position:absolute; inset:0; display:flex; align-items:center; pointer-events:none; opacity:.05}
 .mission-bg .marquee span{font-style:normal; font-family:var(--font-sans); font-weight:800; font-size:clamp(120px,24vw,360px); -webkit-text-stroke:0; color:var(--ink)}
 .mission-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,0.92fr); align-items:center; gap:clamp(32px,6vw,90px)}
-.mission-flower{position:relative; z-index:1; width:100%; max-width:560px; height:auto; justify-self:end; display:block; pointer-events:none}
+.mission-flower{width:100%; max-width:560px; height:auto; justify-self:end; display:block; pointer-events:none}
 @media (max-width:860px){
   .mission-grid{grid-template-columns:1fr}
   .mission-flower{max-width:360px; justify-self:start; margin-top:18px}
