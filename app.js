@@ -11,7 +11,57 @@
   const $$ = (s,c)=> Array.from((c||document).querySelectorAll(s));
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- store badges ---------- */
+  /* ---------- film grain: true random noise redrawn per frame ---------- */
+  (function(){
+    const canvas = document.getElementById('grainCanvas');
+    if(!canvas || reduce) return;
+    const ctx = canvas.getContext('2d');
+    let TILE = 180, PIX = 1, MSPF = 1000/24;
+    const tile = document.createElement('canvas');
+    const tctx = tile.getContext('2d');
+    function buildTile(){
+      const n = Math.ceil(TILE/PIX);
+      tile.width = tile.height = n*PIX;
+      const imgData = tctx.createImageData(n, n);
+      const d = imgData.data;
+      for(let i=0; i<d.length; i+=4){ const v=(Math.random()*255)|0; d[i]=d[i+1]=d[i+2]=v; d[i+3]=255; }
+      const small = document.createElement('canvas'); small.width=small.height=n;
+      small.getContext('2d').putImageData(imgData,0,0);
+      tctx.imageSmoothingEnabled = false;
+      tctx.clearRect(0,0,tile.width,tile.height);
+      tctx.drawImage(small,0,0,n,n,0,0,tile.width,tile.height);
+    }
+    function resize(){ canvas.width = innerWidth; canvas.height = innerHeight; }
+    function punchHoles(){
+      const holes = document.querySelectorAll('.phone, [data-comment-anchor="d7501211d5-div"]');
+      if(!holes.length) return;
+      ctx.save(); ctx.globalCompositeOperation='destination-out'; ctx.fillStyle='#000';
+      holes.forEach(el=>{ const r=el.getBoundingClientRect(); if(r.width&&r.height) ctx.fillRect(r.left,r.top,r.width,r.height); });
+      ctx.restore();
+    }
+    let last=0;
+    function loop(t){
+      if(t-last>MSPF){
+        last=t; buildTile();
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        const pat = ctx.createPattern(tile,'repeat');
+        ctx.fillStyle = pat; ctx.fillRect(0,0,canvas.width,canvas.height);
+        punchHoles();
+      }
+      requestAnimationFrame(loop);
+    }
+    resize(); window.addEventListener('resize', resize);
+    requestAnimationFrame(loop);
+
+    const opacityR = document.getElementById('grainOpacity'), opacityV = document.getElementById('grainOpacityVal');
+    const sizeR = document.getElementById('grainSize'), sizeV = document.getElementById('grainSizeVal');
+    const speedR = document.getElementById('grainSpeed'), speedV = document.getElementById('grainSpeedVal');
+    const blendR = document.getElementById('grainBlend');
+    if(opacityR) opacityR.addEventListener('input', ()=>{ canvas.style.opacity = opacityR.value; opacityV.textContent = opacityR.value; });
+    if(sizeR) sizeR.addEventListener('input', ()=>{ PIX = +sizeR.value; sizeV.textContent = sizeR.value; });
+    if(speedR) speedR.addEventListener('input', ()=>{ MSPF = 1000/(+speedR.value); speedV.textContent = speedR.value; });
+    if(blendR) blendR.addEventListener('input', ()=>{ canvas.style.mixBlendMode = blendR.value; });
+  })();
   const appstore = $('#appstore'), gp = $('#googleplay');
   if(appstore) appstore.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px"><path d="M17.05 12.04c-.02-2.2 1.8-3.26 1.88-3.31-1.02-1.5-2.62-1.71-3.19-1.73-1.36-.14-2.65.8-3.34.8-.69 0-1.75-.78-2.88-.76-1.48.02-2.85.86-3.61 2.19-1.54 2.67-.39 6.62 1.1 8.79.73 1.06 1.6 2.25 2.74 2.21 1.1-.04 1.52-.71 2.85-.71 1.33 0 1.71.71 2.88.69 1.19-.02 1.94-1.08 2.67-2.15.84-1.23 1.19-2.42 1.21-2.48-.03-.01-2.32-.89-2.34-3.53ZM14.87 5.56c.6-.74 1.01-1.75.9-2.77-.87.04-1.93.58-2.56 1.31-.56.65-1.05 1.69-.92 2.68.97.08 1.97-.49 2.58-1.22Z"/></svg><span><span class="sb-small">Download on the</span><span class="sb-big">App Store</span></span>';
   if(gp) gp.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px"><path d="M3.9 2.1C3.6 2.3 3.4 2.6 3.4 3.1v17.8c0 .5.2.8.5 1l9.4-9.9L3.9 2.1Zm12.7 6.3L5.2 1.9c-.4-.2-.8-.2-1.1 0l9.2 9.7 3.3-3.2Zm0 0L13.3 11.6l3.3 3.4 3.6-2.1c.7-.4.7-1.4 0-1.8L16.6 8.4ZM4.1 21.9c.3.2.7.2 1.1 0l11.4-6.5-3.3-3.4-9.2 9.9Z" opacity=".55"/><path d="M3.9 2.1 13.4 12 3.9 21.9c-.3-.2-.5-.5-.5-1V3.1c0-.5.2-.8.5-1Z"/></svg><span><span class="sb-small">Get it on</span><span class="sb-big">Google Play</span></span>';
